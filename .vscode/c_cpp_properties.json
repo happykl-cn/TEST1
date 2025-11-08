@@ -4,15 +4,12 @@
             "name": "Win32",
             "includePath": [
                 "Z:\\GUN_ARM\\14.3 rel1\\lib\\gcc\\arm-none-eabi\\14.3.1\\include",
-                "${workspaceFolder}/Inc",
-                "${workspaceFolder}/*",
-                "${workspaceFolder}/*",
-                "${workspaceFolder}/*",
-                "${workspaceFolder}/*"
+
+                "${workspaceFolder}/**"
             ],
             "defines": [
                 "USE_HAL_DRIVER",
-                "STM32F407xx"
+                "STM32F103xB"
             ],
             "compilerPath": "Z:/GUN_ARM/14.3 rel1/bin/arm-none-eabi-gcc.exe",
             "intelliSenseMode": "gcc-x64",
