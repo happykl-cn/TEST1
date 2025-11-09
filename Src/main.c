@@ -18,10 +18,12 @@
 /* USER CODE END Header */
 /* Includes ------------------------------------------------------------------*/
 #include "main.h"
+#include "tim.h"
 #include "gpio.h"
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include "stdbool.h"
 
 /* USER CODE END Includes */
 
@@ -54,7 +56,27 @@ void SystemClock_Config(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
-
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim){
+  if(htim == (&htim3)){
+    static uint16_t cnt = 1999;
+    static bool dir = 0;
+    __HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_1, cnt);
+    if(dir == 0)
+    {
+      if (cnt < 3999)
+        cnt+=10;
+      else
+        dir = 1;
+    }
+    else
+    {
+      if (cnt > 1999)
+        cnt-=10;
+      else
+        dir = 0;
+    }
+  }
+}
 /* USER CODE END 0 */
 
 /**
@@ -86,14 +108,26 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
+  MX_TIM2_Init();
+  MX_TIM3_Init();
   /* USER CODE BEGIN 2 */
-
+  HAL_TIM_PWM_Start(&htim2, TIM_CHANNEL_1);
+  HAL_TIM_Base_Start_IT(&htim3);
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
+    // __HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_1, 1999);
+    // HAL_GPIO_WritePin(GPIOC, GPIO_PIN_13, GPIO_PIN_RESET);
+    
+    // HAL_Delay(1000);
+    // __HAL_TIM_SET_COMPARE(&htim2, TIM_CHANNEL_1, 3999);
+
+    // HAL_GPIO_WritePin(GPIOC, GPIO_PIN_13, GPIO_PIN_SET);
+    // HAL_Delay(1000);
+
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
